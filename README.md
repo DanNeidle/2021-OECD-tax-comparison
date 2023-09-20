@@ -6,3 +6,5 @@ See https://taxpolicy.org.uk/oecd2021 for the background
 
 (c) Dan Neidle of Tax Policy Associates Ltd, 2023
 licensed under the GNU General Public License, version 2
+
+All data (c) OECD and from their wonderful tax revenue database.
