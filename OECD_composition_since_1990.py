@@ -94,11 +94,11 @@ def process_raw_data(excel_data):
             
             # if no data then use the previous year's data (if we have it!)
             if has_data and (excel_row[start_column].value == 0 or not has_content(excel_row[start_column].value)):
-                tax_revenue[country][year] = tax_revenue[country][year - 1]
+                tax_revenue[country][str(year)] = tax_revenue[country][str(year - 1)]
                 continue
             
             has_data = True
-            tax_revenue[country][year] = {}
+            tax_revenue[country][str(year)] = {}
             
             
             for tax in tax_types:
@@ -114,7 +114,7 @@ def process_raw_data(excel_data):
                         if has_content(excel_row[start_column - column].value):
                             total -= excel_row[start_column - column].value
                 
-                tax_revenue[country][year][tax] = total
+                tax_revenue[country][str(year)][tax] = total
     
     return tax_revenue
 
@@ -202,7 +202,7 @@ def plot_tax_data(oecd_data, year, mode, highlight_country):
     # Filter countries based on the mode
     if mode == "OECD":
         filtered_data = {k: v for k, v in oecd_data.items() if v.get("OECD", False) == True}
-    elif mode == "non-OECD":
+    elif mode == "Non-OECD":
         filtered_data = {k: v for k, v in oecd_data.items() if v.get("OECD", False) == False}
     else:  # mode == "both"
         filtered_data = oecd_data
@@ -246,7 +246,7 @@ def plot_tax_data(oecd_data, year, mode, highlight_country):
     fig.update_layout(
         barmode='stack',
         images=[logo],
-        title=f"Tax systems across the OECD (% of GDP, {year})",
+        title=f"{mode} tax system composition (% of GDP, {year})",
         title_x=0.5,
         title_font=dict(size=24),
         xaxis_tickangle=-45, 
@@ -288,4 +288,4 @@ else:
 # fig = plot_tax_data(oecd_data, 2020, "OECD", "United Kingdom")
 # fig.show()
 
-create_gif(oecd_data, "all", "United Kingdom")
+create_gif(oecd_data, "Non-OECD", "United Kingdom")
